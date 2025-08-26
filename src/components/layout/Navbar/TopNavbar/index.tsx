@@ -207,7 +207,7 @@ const data: NavMenu = [
   {
     id: 5,
     type: "MenuItem",
-    label: <span className="sale-label-animate">🔥 Flash sale</span>,
+  label: "🔥 Flash sale",
     url: "/shop#on-sale",
     children: [],
   },

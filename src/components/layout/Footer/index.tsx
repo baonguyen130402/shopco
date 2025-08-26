@@ -74,11 +74,15 @@ const Footer = () => {
                   "text-[28px] lg:text-[32px] mb-6",
                 ])}
               >
-                SHOP.CO
+                TPHOME
               </h1>
-              <p className="text-black/60 text-sm mb-9">
-                We have clothes that suits your style and which you’re proud to
-                wear. From women to men.
+              <p className="text-black/80 text-sm font-medium mb-9 whitespace-pre-line">
+                SHOWROOM NỘI THẤT TP HOME<br/>
+                Địa chỉ: 42 QL1A, Xã Trung Hoà, Huyện Trảng Bom, Tỉnh Đồng Nai<br/>
+                Hoạt động: 7:30 - 21:00<br/>
+                Email: phatnguyen.tphome@gmail.com<br/>
+                Tel : 093 39 39 309 <br/>
+                Hotline : 0779 89 07 89
               </p>
               <div className="flex items-center">
                 {socialsData.map((social) => (

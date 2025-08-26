@@ -1,0 +1,49 @@
+.hotline-animate {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(90deg, #d32f2f, #c2185b, #d32f2f);
+  background-size: 200% 100%;
+  color: #fff;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-radius: 8px; /* Bo góc nhẹ để hiện đại hơn */
+  box-shadow: 0 0 8px rgba(211, 47, 47, 0.4);
+  animation: hotline-glow 1.5s ease-in-out infinite, hotline-scale 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transition: box-shadow 0.3s, transform 0.2s;
+  cursor: pointer; /* Thêm con trỏ để tăng tính tương tác */
+}
+
+.hotline-animate:hover {
+  box-shadow: 0 0 16px rgba(211, 47, 47, 0.6);
+  transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi hover */
+}
+
+@keyframes hotline-glow {
+  0% {
+    background-position: 0% 50%;
+    box-shadow: 0 0 8px rgba(211, 47, 47, 0.4), 0 0 4px rgba(194, 24, 91, 0.3);
+  }
+  50% {
+    background-position: 100% 50%;
+    box-shadow: 0 0 16px rgba(194, 24, 91, 0.7), 0 0 8px rgba(211, 47, 47, 0.5);
+  }
+  100% {
+    background-position: 0% 50%;
+    box-shadow: 0 0 8px rgba(211, 47, 47, 0.4), 0 0 4px rgba(194, 24, 91, 0.3);
+  }
+}
+
+@keyframes hotline-scale {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  40% {
+    transform: scale(1.06) translateY(-2px);
+  }
+  60% {
+    transform: scale(1.06) translateY(-2px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}

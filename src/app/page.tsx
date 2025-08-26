@@ -1,4 +1,5 @@
 import ProductListSec from "@/components/common/ProductListSec";
+import "@/styles/flash-sale.css";
 import Brands from "@/components/homepage/Brands";
 import DressStyle from "@/components/homepage/DressStyle";
 import Header from "@/components/homepage/Header";
@@ -205,19 +206,14 @@ export const reviewsData: Review[] = [
   },
 ];
 
-export const revalidate = 86400; // ISR: revalidate once per day
-
-import WebsiteJsonLd from "./(seo)/website-jsonld";
-
 export default function Home() {
   return (
     <>
       <Header />
       <Brands />
-      <WebsiteJsonLd />
       <main className="my-[50px] sm:my-[72px]">
         <ProductListSec
-          title="NEW ARRIVALS"
+          title={<span className="flash-sale-animate">FLASH SALE</span>}
           data={newArrivalsData}
           viewAllLink="/shop#new-arrivals"
         />
@@ -226,7 +222,22 @@ export default function Home() {
         </div>
         <div className="mb-[50px] sm:mb-20">
           <ProductListSec
-            title="top selling"
+            title="GACH TRANG TRI"
+            data={topSellingData}
+            viewAllLink="/shop#top-selling"
+          />
+        </div>
+        <ProductListSec
+          title="GACH OP LAT"
+          data={newArrivalsData}
+          viewAllLink="/shop#new-arrivals"
+        />
+        <div className="max-w-frame mx-auto px-4 xl:px-0">
+          <hr className="h-[1px] border-t-black/10 my-10 sm:my-16" />
+        </div>
+        <div className="mb-[50px] sm:mb-20">
+          <ProductListSec
+            title="THIET BI VE SINH"
             data={topSellingData}
             viewAllLink="/shop#top-selling"
           />

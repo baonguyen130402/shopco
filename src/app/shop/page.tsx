@@ -1,6 +1,4 @@
 import BreadcrumbShop from "@/components/shop-page/BreadcrumbShop";
-import metadata from "./metadata";
-export { metadata };
 
 import {
   Select,
@@ -23,8 +21,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-
-export const revalidate = 43200; // ISR: revalidate every 12 hours
 
 export default function ShopPage() {
   return (

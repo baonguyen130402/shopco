@@ -1,1 +1,0 @@
-export { default, runtime, size, contentType, alt } from "./(seo)/opengraph-image";

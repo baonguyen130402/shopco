@@ -11,8 +11,9 @@ import ProductCard from "./ProductCard";
 import { Product } from "@/types/product.types";
 import Link from "next/link";
 
+import { ReactNode } from "react";
 type ProductListSecProps = {
-  title: string;
+  title: ReactNode;
   data: Product[];
   viewAllLink?: string;
 };
@@ -61,7 +62,7 @@ const ProductListSec = ({ title, data, viewAllLink }: ProductListSecProps) => {
               href={viewAllLink}
               className="w-full inline-block sm:w-[218px] px-[54px] py-4 border rounded-full hover:bg-black hover:text-white text-black transition-all font-medium text-sm sm:text-base border-black/10"
             >
-              View All
+              Xem tat ca
             </Link>
           </div>
         )}

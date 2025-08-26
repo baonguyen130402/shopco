@@ -28,14 +28,38 @@ const DressStyle = () => {
           className="flex flex-col sm:flex-row md:h-[289px] space-y-4 sm:space-y-0 sm:space-x-5 mb-4 sm:mb-5"
         >
           <DressStyleCard
-            title="Casual"
+            title="Gach op lat"
             url="/shop#casual"
             className="md:max-w-[260px] lg:max-w-[360px] xl:max-w-[407px] h-[190px] bg-[url('/images/dress-style-1.png')]"
           />
           <DressStyleCard
-            title="Formal"
+            title="Thiet bi ve sinh"
             url="/shop#formal"
             className="md:max-w-[684px] h-[190px] bg-[url('/images/dress-style-2.png')]"
+          />
+        </motion.div>
+        <motion.div
+          initial={{ y: "100px", opacity: 0 }}
+          whileInView={{ y: "0", opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 1, duration: 0.6 }}
+          className="flex flex-col sm:flex-row md:h-[289px] space-y-5 sm:space-y-0 sm:space-x-5 mb-4 sm:mb-5"
+        >
+          
+          <DressStyleCard
+            title="Bon cau"
+            url="/shop#gym"
+            className="md:max-w-[260px] lg:max-w-[360px] xl:max-w-[407px] h-[190px] bg-[url('/images/dress-style-4.png')]"
+          />
+          <DressStyleCard
+            title="Lavabo"
+            url="/shop#gym"
+            className="md:max-w-[260px] lg:max-w-[360px] xl:max-w-[407px] h-[190px] bg-[url('/images/dress-style-3.png')]"
+          />
+          <DressStyleCard
+            title="Bon rua"
+            url="/shop#gym"
+            className="md:max-w-[260px] lg:max-w-[360px] xl:max-w-[407px] h-[190px] bg-[url('/images/dress-style-2.png')]"
           />
         </motion.div>
         <motion.div
@@ -46,12 +70,12 @@ const DressStyle = () => {
           className="flex flex-col sm:flex-row md:h-[289px] space-y-5 sm:space-y-0 sm:space-x-5"
         >
           <DressStyleCard
-            title="Party"
+            title="Den trang tri"
             url="/shop#party"
             className="md:max-w-[684px] h-[190px] bg-[url('/images/dress-style-3.png')]"
           />
           <DressStyleCard
-            title="Gym"
+            title="Phu kien trang tri"
             url="/shop#gym"
             className="md:max-w-[260px] lg:max-w-[360px] xl:max-w-[407px] h-[190px] bg-[url('/images/dress-style-4.png')]"
           />

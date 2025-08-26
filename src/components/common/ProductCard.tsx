@@ -26,17 +26,20 @@ const ProductCard = ({ data }: ProductCardProps) => {
       </div>
       <strong className="text-black xl:text-xl">{data.title}</strong>
       <div className="flex items-end mb-1 xl:mb-2">
-        <Rating
+        {/* <Rating
           initialValue={data.rating}
           allowFraction
           SVGclassName="inline-block"
           emptyClassName="fill-gray-50"
           size={19}
           readonly
-        />
-        <span className="text-black text-xs xl:text-sm ml-[11px] xl:ml-[13px] pb-0.5 xl:pb-0">
+        /> */}
+        {/* <span className="text-black text-xs xl:text-sm ml-[11px] xl:ml-[13px] pb-0.5 xl:pb-0">
           {data.rating.toFixed(1)}
           <span className="text-black/60">/5</span>
+        </span> */}
+        <span className="text-black text-md xl:text-md ml-[2px] xl:ml-[2px] pb-0.5 xl:pb-0">
+          Thong tin mo ta san pham
         </span>
       </div>
       <div className="flex items-center space-x-[5px] xl:space-x-2.5">

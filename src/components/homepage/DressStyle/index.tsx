@@ -28,7 +28,7 @@ const DressStyle = () => {
           className="flex flex-col sm:flex-row md:h-[289px] space-y-4 sm:space-y-0 sm:space-x-5 mb-4 sm:mb-5"
         >
           <DressStyleCard
-            title="Gach op lat"
+            title=" op lat"
             url="/shop#casual"
             className="md:max-w-[260px] lg:max-w-[360px] xl:max-w-[407px] h-[190px] bg-[url('/images/dress-style-1.png')]"
           />

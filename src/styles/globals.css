@@ -20,6 +20,54 @@
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Typography utilities cho website gạch ốp lát & nội thất */
+  .font-display {
+    font-family: var(--font-playfair), Georgia, serif;
+    font-weight: 700;
+  }
+  
+  .font-body {
+    font-family: var(--font-lato), system-ui, Arial, sans-serif;
+  }
+  
+  .font-heading {
+    font-family: var(--font-playfair), Georgia, serif;
+    font-weight: 600;
+  }
+  
+  .font-content {
+    font-family: var(--font-lato), system-ui, Arial, sans-serif;
+    font-weight: 400;
+  }
+  
+  /* Smooth Vietnamese text rendering */
+  .vietnamese-text {
+    font-feature-settings: "liga" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Pricing and numbers styling with Lato */
+  .price-text {
+    font-family: var(--font-lato), system-ui, Arial, sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+  }
+  
+  /* Title styling for luxury feel */
+  .luxury-title {
+    font-family: var(--font-playfair), Georgia, serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  
+  /* Clean body text for readability */
+  .clean-text {
+    font-family: var(--font-lato), system-ui, Arial, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+  }
 }
 
 @layer base {

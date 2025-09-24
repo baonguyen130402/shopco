@@ -1,29 +1,47 @@
-import {
-  newArrivalsData,
-  relatedProductData,
-  topSellingData,
-} from "@/app/page";
 import ProductListSec from "@/components/common/ProductListSec";
 import BreadcrumbProduct from "@/components/product-page/BreadcrumbProduct";
 import Header from "@/components/product-page/Header";
 import Tabs from "@/components/product-page/Tabs";
 import { Product } from "@/types/product.types";
 import { notFound } from "next/navigation";
+import { DummyJsonApi } from "@/services/dummyJsonApi";
+import { transformDummyProductToProduct, transformDummyProductsToProducts } from "@/utils/productTransformer";
 
-const data: Product[] = [
-  ...newArrivalsData,
-  ...topSellingData,
-  ...relatedProductData,
-];
+async function getProductData(id: number): Promise<Product | null> {
+  try {
+    const dummyProduct = await DummyJsonApi.getProductById(id);
+    return transformDummyProductToProduct(dummyProduct);
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    return null;
+  }
+}
 
-export default function ProductPage({
+async function getRelatedProducts(limit = 4): Promise<Product[]> {
+  try {
+    const response = await DummyJsonApi.getAllProducts(limit);
+    return transformDummyProductsToProducts(response.products);
+  } catch (error) {
+    console.error('Error fetching related products:', error);
+    return [];
+  }
+}
+
+export default async function ProductPage({
   params,
 }: {
   params: { slug: string[] };
 }) {
-  const productData = data.find(
-    (product) => product.id === Number(params.slug[0])
-  );
+  const productId = Number(params.slug[0]);
+  
+  if (isNaN(productId)) {
+    notFound();
+  }
+
+  const [productData, relatedProducts] = await Promise.all([
+    getProductData(productId),
+    getRelatedProducts()
+  ]);
 
   if (!productData?.title) {
     notFound();
@@ -40,7 +58,7 @@ export default function ProductPage({
         <Tabs />
       </div>
       <div className="mb-[50px] sm:mb-20">
-        <ProductListSec title="You might also like" data={relatedProductData} />
+        <ProductListSec title="You might also like" data={relatedProducts} />
       </div>
     </main>
   );

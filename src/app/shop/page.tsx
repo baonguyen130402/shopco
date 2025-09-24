@@ -10,19 +10,41 @@ import {
 import MobileFilters from "@/components/shop-page/filters/MobileFilters";
 import Filters from "@/components/shop-page/filters";
 import { FiSliders } from "react-icons/fi";
-import { newArrivalsData, relatedProductData, topSellingData } from "../page";
 import ProductCard from "@/components/common/ProductCard";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+import { DummyJsonApi } from "@/services/dummyJsonApi";
+import { transformDummyProductsToProducts } from "@/utils/productTransformer";
+import ShopPagination from "@/components/shop-page/ShopPagination";
 
-export default function ShopPage() {
+const PRODUCTS_PER_PAGE = 9;
+
+async function getShopProducts(page: number = 1) {
+  try {
+    const skip = (page - 1) * PRODUCTS_PER_PAGE;
+    const response = await DummyJsonApi.getAllProducts(PRODUCTS_PER_PAGE, skip);
+    return {
+      products: transformDummyProductsToProducts(response.products),
+      total: response.total,
+      currentPage: page,
+      totalPages: Math.ceil(response.total / PRODUCTS_PER_PAGE)
+    };
+  } catch (error) {
+    console.error('Error fetching shop products:', error);
+    return {
+      products: [],
+      total: 0,
+      currentPage: 1,
+      totalPages: 0
+    };
+  }
+}
+
+interface ShopPageProps {
+  searchParams: { page?: string };
+}
+
+export default async function ShopPage({ searchParams }: ShopPageProps) {
+  const currentPage = Number(searchParams.page) || 1;
+  const { products, total, totalPages } = await getShopProducts(currentPage);
   return (
     <main className="pb-20">
       <div className="max-w-frame mx-auto px-4 xl:px-0">
@@ -44,7 +66,7 @@ export default function ShopPage() {
               </div>
               <div className="flex flex-col sm:items-center sm:flex-row">
                 <span className="text-sm md:text-base text-black/60 mr-3">
-                  Showing 1-10 of 100 Products
+                  Showing {((currentPage - 1) * PRODUCTS_PER_PAGE) + 1}-{Math.min(currentPage * PRODUCTS_PER_PAGE, total)} of {total} Products
                 </span>
                 <div className="flex items-center">
                   Sort by:{" "}
@@ -62,74 +84,12 @@ export default function ShopPage() {
               </div>
             </div>
             <div className="w-full grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-              {[
-                ...relatedProductData.slice(1, 4),
-                ...newArrivalsData.slice(1, 4),
-                ...topSellingData.slice(1, 4),
-              ].map((product) => (
+              {products.map((product) => (
                 <ProductCard key={product.id} data={product} />
               ))}
             </div>
             <hr className="border-t-black/10" />
-            <Pagination className="justify-between">
-              <PaginationPrevious href="#" className="border border-black/10" />
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                    isActive
-                  >
-                    1
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    2
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem className="hidden lg:block">
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    3
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationEllipsis className="text-black/50 font-medium text-sm" />
-                </PaginationItem>
-                <PaginationItem className="hidden lg:block">
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    8
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem className="hidden sm:block">
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    9
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    10
-                  </PaginationLink>
-                </PaginationItem>
-              </PaginationContent>
-
-              <PaginationNext href="#" className="border border-black/10" />
-            </Pagination>
+            <ShopPagination currentPage={currentPage} totalPages={totalPages} />
           </div>
         </div>
       </div>

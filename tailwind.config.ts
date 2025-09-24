@@ -10,8 +10,24 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        integralCF: ["var(--font-integralCF)"],
-        satoshi: ["var(--font-satoshi)"],
+        // Hệ thống font chính cho website gạch ốp lát & nội thất
+        playfair: ["var(--font-playfair)", "Georgia", "serif"],
+        lato: ["var(--font-lato)", "system-ui", "Arial", "sans-serif"],
+        
+        // Semantic font names
+        display: ["var(--font-playfair)", "Georgia", "serif"],
+        body: ["var(--font-lato)", "system-ui", "Arial", "sans-serif"],
+        
+        // Default fonts
+        sans: ["var(--font-lato)", "system-ui", "Arial", "sans-serif"],
+        serif: ["var(--font-playfair)", "Georgia", "serif"],
+        
+        // Backward compatibility
+        integralCF: ["var(--font-playfair)", "Georgia", "serif"],
+        satoshi: ["var(--font-lato)", "system-ui", "Arial", "sans-serif"],
+        inter: ["var(--font-lato)", "system-ui", "Arial", "sans-serif"],
+        poppins: ["var(--font-lato)", "system-ui", "Arial", "sans-serif"],
+        roboto: ["var(--font-lato)", "system-ui", "Arial", "sans-serif"],
       },
       screens: {
         xs: "375px",

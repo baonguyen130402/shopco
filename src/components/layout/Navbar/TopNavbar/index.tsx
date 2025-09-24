@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import "@/styles/hotline-animate.css";
-import { integralCF } from "@/styles/fonts";
+import { playfairDisplay } from "@/styles/fonts";
 import Link from "next/link";
 import React from "react";
 import { NavMenu } from "../navbar.types";
@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 const data: NavMenu = [
   {
     id: 1,
-    label: "Phu kien trang tri",
+    label: "Phụ kiện trang trí",
     type: "MenuList",
     children: [
       {
@@ -45,54 +45,54 @@ const data: NavMenu = [
   {
     id: 2,
     type: "MenuList",
-    label: "Gach op lat",
+    label: "Gạch ốp lát",
     url: "/shop#new-arrivals",
     children: [
       {
         id: 11,
-        label: "Gach An Do",
+        label: "Gạch Ấn Độ",
         url: "/shop#gach-an-do",
         description: "Gạch nhập khẩu Ấn Độ, chất lượng cao, mẫu mã đa dạng",
       },
       {
         id: 12,
-        label: "Gach 30x60",
+        label: "Gạch 30x60",
         url: "/shop#gach-30x60",
         description: "Gạch lát nền, ốp tường phổ biến cho nhà ở, văn phòng",
       },
       {
         id: 13,
-        label: "Gach 20x120",
+        label: "Gạch 20x120",
         url: "/shop#gach-20x120",
         description: "Gạch vân gỗ, phù hợp lát sàn phòng khách, phòng ngủ",
       },
       {
         id: 14,
-        label: "Gach 60x60",
+        label: "Gạch 60x60",
         url: "/shop#gach-60x60",
         description: "Gạch lát nền cao cấp, phù hợp không gian rộng",
       },
       {
         id: 15,
-        label: "Gach 80x80",
+        label: "Gạch 80x80",
         url: "/shop#gach-80x80",
         description: "Gạch lát nền kích thước lớn, sang trọng cho biệt thự, sảnh lớn",
       },
       {
         id: 16,
-        label: "Gach 40x40",
+        label: "Gạch 40x40",
         url: "/shop#gach-40x40",
         description: "Gạch lát sân vườn, ban công, khu vực ngoài trời",
       },
       {
         id: 17,
-        label: "Gach 50x50",
+        label: "Gạch 50x50",
         url: "/shop#gach-50x50",
         description: "Gạch lát nền đa năng cho nhiều không gian khác nhau",
       },
       {
         id: 18,
-        label: "Gach 25x40",
+        label: "Gạch 25x40",
         url: "/shop#gach-25x40",
         description: "Gạch ốp tường nhà tắm, nhà vệ sinh phổ biến",
       },
@@ -101,7 +101,7 @@ const data: NavMenu = [
   {
     id: 3,
     type: "MenuList",
-    label: "Thiet bi ve sinh",
+    label: "Thiết bị vệ sinh",
     url: "/shop#brands",
     children: [
       {
@@ -151,7 +151,7 @@ const data: NavMenu = [
   {
     id: 4,
     type: "MenuList",
-    label: "Den trang tri",
+    label: "Đèn trang trí",
     url: "/shop#brands",
     children: [
       {
@@ -224,8 +224,8 @@ const TopNavbar = () => {
           <Link
             href="/"
             className={cn([
-              integralCF.className,
-              "text-2xl lg:text-[32px] mb-2 mr-3 lg:mr-10",
+              playfairDisplay.className,
+              "text-2xl lg:text-[32px] mb-2 mr-3 lg:mr-10 font-bold",
             ])}
           >
             TPHOME
@@ -259,12 +259,12 @@ const TopNavbar = () => {
           <InputGroup.Input
             type="search"
             name="search"
-            placeholder="Search for products"
-            className="bg-transparent placeholder:text-black/40"
+            placeholder="Tìm kiếm sản phẩm..."
+            className="bg-transparent placeholder:text-black/40 font-lato"
           />
         </InputGroup>
         <div className="flex items-center">
-          <Button className="hotline-animate">
+          <Button className="hotline-animate font-lato font-medium">
             <a href="tel:0779890789">📞 0779 89 0789</a>
           </Button>
         </div>

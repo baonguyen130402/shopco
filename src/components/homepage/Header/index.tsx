@@ -1,7 +1,7 @@
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { integralCF } from "@/styles/fonts";
+import { playfairDisplay } from "@/styles/fonts";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -18,22 +18,22 @@ const Header = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className={cn([
-              integralCF.className,
-              "text-4xl lg:text-[64px] lg:leading-[64px] mb-5 lg:mb-8",
+              playfairDisplay.className,
+              "text-3xl md:text-4xl lg:text-[60px] lg:leading-[72px] mb-5 lg:mb-8 font-bold",
             ])}
           >
-            FIND CLOTHES THAT MATCHES YOUR STYLE
+            GẠCH ỐP LÁT & NỘI THẤT CAO CẤP
           </motion.h2>
           <motion.p
             initial={{ y: "100px", opacity: 0 }}
             whileInView={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="text-black/60 text-sm lg:text-base mb-6 lg:mb-8 max-w-[545px]"
+            className="text-black/60 text-sm lg:text-base mb-6 lg:mb-8 max-w-[545px] font-lato"
           >
-            Browse through our diverse range of meticulously crafted garments,
-            designed to bring out your individuality and cater to your sense of
-            style.
+            Khám phá bộ sưu tập đa dạng gạch ốp lát, gạch trang trí và thiết bị nội thất 
+            cao cấp. Chúng tôi mang đến cho bạn những sản phẩm chất lượng nhất để tạo nên 
+            không gian sống hoàn hảo.
           </motion.p>
           <motion.div
             initial={{ y: "100px", opacity: 0 }}
@@ -43,9 +43,9 @@ const Header = () => {
           >
             <Link
               href="/shop"
-              className="w-full md:w-52 mb-5 md:mb-12 inline-block text-center bg-black hover:bg-black/80 transition-all text-white px-14 py-4 rounded-full hover:animate-pulse"
+              className="w-full md:w-52 mb-5 md:mb-12 inline-block text-center bg-black hover:bg-black/80 transition-all text-white px-14 py-4 rounded-full hover:animate-pulse font-lato font-medium"
             >
-              Shop Now
+              Mua Ngay
             </Link>
           </motion.div>
           <motion.div
@@ -56,11 +56,11 @@ const Header = () => {
             className="flex md:h-full md:max-h-11 lg:max-h-[52px] xl:max-h-[68px] items-center justify-center md:justify-start flex-wrap sm:flex-nowrap md:space-x-3 lg:space-x-6 xl:space-x-8 md:mb-[116px]"
           >
             <div className="flex flex-col">
-              <span className="font-bold text-2xl md:text-xl lg:text-3xl xl:text-[40px] xl:mb-2">
-                <AnimatedCounter from={0} to={200} />+
+              <span className="font-bold text-2xl md:text-xl lg:text-3xl xl:text-[40px] xl:mb-2 font-lato">
+                <AnimatedCounter from={0} to={500} />+
               </span>
-              <span className="text-xs xl:text-base text-black/60 text-nowrap">
-                International Brands
+              <span className="text-xs xl:text-base text-black/60 text-nowrap font-lato">
+                Sản Phẩm Chất Lượng
               </span>
             </div>
             <Separator
@@ -68,11 +68,11 @@ const Header = () => {
               orientation="vertical"
             />
             <div className="flex flex-col ml-6 md:ml-0">
-              <span className="font-bold text-2xl md:text-xl lg:text-3xl xl:text-[40px] xl:mb-2">
-                <AnimatedCounter from={0} to={2000} />+
+              <span className="font-bold text-2xl md:text-xl lg:text-3xl xl:text-[40px] xl:mb-2 font-lato">
+                <AnimatedCounter from={0} to={50} />+
               </span>
-              <span className="text-xs xl:text-base text-black/60 text-nowrap">
-                High-Quality Products
+              <span className="text-xs xl:text-base text-black/60 text-nowrap font-lato">
+                Thương Hiệu Uy Tín
               </span>
             </div>
             <Separator
@@ -80,11 +80,11 @@ const Header = () => {
               orientation="vertical"
             />
             <div className="flex flex-col w-full text-center sm:w-auto sm:text-left mt-3 sm:mt-0 sm:ml-6 md:ml-0">
-              <span className="font-bold text-2xl md:text-xl lg:text-3xl xl:text-[40px] xl:mb-2">
-                <AnimatedCounter from={0} to={3000} />+
+              <span className="font-bold text-2xl md:text-xl lg:text-3xl xl:text-[40px] xl:mb-2 font-lato">
+                <AnimatedCounter from={0} to={1000} />+
               </span>
-              <span className="text-xs xl:text-base text-black/60 text-nowrap">
-                Happy Customers
+              <span className="text-xs xl:text-base text-black/60 text-nowrap font-lato">
+                Khách Hàng Hài Lòng
               </span>
             </div>
           </motion.div>

@@ -24,7 +24,7 @@ const ProductCard = ({ data }: ProductCardProps) => {
           priority
         />
       </div>
-      <strong className="text-black xl:text-xl">{data.title}</strong>
+      <strong className="text-black xl:text-xl font-lato font-semibold">{data.title}</strong>
       <div className="flex items-end mb-1 xl:mb-2">
         {/* <Rating
           initialValue={data.rating}
@@ -38,34 +38,34 @@ const ProductCard = ({ data }: ProductCardProps) => {
           {data.rating.toFixed(1)}
           <span className="text-black/60">/5</span>
         </span> */}
-        <span className="text-black text-md xl:text-md ml-[2px] xl:ml-[2px] pb-0.5 xl:pb-0">
-          Thong tin mo ta san pham
+        <span className="text-black text-sm xl:text-md ml-[2px] xl:ml-[2px] pb-0.5 xl:pb-0 font-lato text-black/70">
+          Sản phẩm chất lượng cao
         </span>
       </div>
       <div className="flex items-center space-x-[5px] xl:space-x-2.5">
         {data.discount.percentage > 0 ? (
-          <span className="font-bold text-black text-xl xl:text-2xl">
-            {`$${Math.round(
+          <span className="font-bold text-black text-xl xl:text-2xl font-lato">
+            {`${Math.round(
               data.price - (data.price * data.discount.percentage) / 100
-            )}`}
+            ).toLocaleString('vi-VN')}đ`}
           </span>
         ) : data.discount.amount > 0 ? (
-          <span className="font-bold text-black text-xl xl:text-2xl">
-            {`$${data.price - data.discount.amount}`}
+          <span className="font-bold text-black text-xl xl:text-2xl font-lato">
+            {`${(data.price - data.discount.amount).toLocaleString('vi-VN')}đ`}
           </span>
         ) : (
-          <span className="font-bold text-black text-xl xl:text-2xl">
-            ${data.price}
+          <span className="font-bold text-black text-xl xl:text-2xl font-lato">
+            {data.price.toLocaleString('vi-VN')}đ
           </span>
         )}
         {data.discount.percentage > 0 && (
-          <span className="font-bold text-black/40 line-through text-xl xl:text-2xl">
-            ${data.price}
+          <span className="font-bold text-black/40 line-through text-xl xl:text-2xl font-lato">
+            {data.price.toLocaleString('vi-VN')}đ
           </span>
         )}
         {data.discount.amount > 0 && (
-          <span className="font-bold text-black/40 line-through text-xl xl:text-2xl">
-            ${data.price}
+          <span className="font-bold text-black/40 line-through text-xl xl:text-2xl font-lato">
+            {data.price.toLocaleString('vi-VN')}đ
           </span>
         )}
         {data.discount.percentage > 0 ? (

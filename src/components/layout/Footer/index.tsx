@@ -25,11 +25,6 @@ const socialsData: SocialNetworks[] = [
     icon: <FaInstagram />,
     url: "https://instagram.com",
   },
-  {
-    id: 4,
-    icon: <FaGithub />,
-    url: "https://github.com/mohammadoftadeh",
-  },
 ];
 
 const paymentBadgesData: PaymentBadge[] = [
@@ -87,6 +82,7 @@ const Footer = () => {
               <div className="flex items-center">
                 {socialsData.map((social) => (
                   <Link
+                    title={social.url}
                     href={social.url}
                     key={social.id}
                     className="bg-white hover:bg-black hover:text-white transition-all mr-3 w-7 h-7 rounded-full border border-black/20 flex items-center justify-center p-1.5"

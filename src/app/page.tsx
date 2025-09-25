@@ -7,7 +7,7 @@ import Reviews from "@/components/homepage/Reviews";
 import { Product } from "@/types/product.types";
 import { DummyJsonApi } from "@/services/dummyJsonApi";
 import { transformDummyProductsToProducts } from "@/utils/productTransformer";
-import { reviewsData } from "@/data/reviewsData";
+import { ReviewServices } from "@/services/reviewServices";
 
 async function getProductsByRange(skip: number, limit: number): Promise<Product[]> {
   try {
@@ -19,13 +19,24 @@ async function getProductsByRange(skip: number, limit: number): Promise<Product[
   }
 }
 
+async function getReviewsData() {
+  try {
+    return await ReviewServices.getRandomReviews(6);
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+    // Fallback to empty array or static data
+    return [];
+  }
+}
+
 export default async function Home() {
-  // Fetch different sets of products for different sections
-  const [flashSaleProducts, decorativeTileProducts, floorTileProducts, sanitaryProducts] = await Promise.all([
+  // Fetch different sets of products for different sections and reviews
+  const [flashSaleProducts, decorativeTileProducts, floorTileProducts, sanitaryProducts, reviewsData] = await Promise.all([
     getProductsByRange(0, 4),   // First 4 products for flash sale
     getProductsByRange(4, 4),   // Next 4 products for decorative tiles
     getProductsByRange(8, 4),   // Next 4 products for floor tiles  
     getProductsByRange(12, 4),  // Next 4 products for sanitary equipment
+    getReviewsData(),           // Dynamic reviews from DummyJSON posts
   ]);
 
   return (

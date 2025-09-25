@@ -5,6 +5,9 @@ import { Button } from "../ui/button";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { Review } from "@/types/review.types";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import Link from "next/link";
+import { generateBlogSlug } from "@/utils/slugUtils";
 
 type ReviewCardProps = {
   blurChild?: React.ReactNode;
@@ -12,6 +15,7 @@ type ReviewCardProps = {
   isDate?: boolean;
   data: Review;
   className?: string;
+  isClickable?: boolean;
 };
 
 const ReviewCard = ({
@@ -20,23 +24,18 @@ const ReviewCard = ({
   isDate = false,
   data,
   className,
+  isClickable = true,
 }: ReviewCardProps) => {
-  return (
+  const cardContent = (
     <div
       className={cn([
         "relative bg-white flex flex-col items-start aspect-auto border border-black/10 rounded-[20px] p-6 sm:px-8 sm:py-7 overflow-hidden",
+        isClickable && "cursor-pointer hover:shadow-lg transition-shadow duration-200",
         className,
       ])}
     >
       {blurChild && blurChild}
       <div className="w-full flex items-center justify-between mb-3 sm:mb-4">
-        <Rating
-          initialValue={data.rating}
-          allowFraction
-          SVGclassName="inline-block"
-          size={23}
-          readonly
-        />
         {isAction && (
           <Button variant="ghost" size="icon">
             <IoEllipsisHorizontal className="text-black/40 text-2xl" />
@@ -54,6 +53,16 @@ const ReviewCard = ({
         </p>
       )}
     </div>
+  );
+
+  const blogSlug = generateBlogSlug(data.content, data.id);
+  
+  return isClickable ? (
+    <Link href={`/blogs/${blogSlug}`} className="block">
+      {cardContent}
+    </Link>
+  ) : (
+    cardContent
   );
 };
 

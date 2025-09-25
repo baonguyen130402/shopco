@@ -8,6 +8,7 @@ import { DummyJsonApi } from "@/services/dummyJsonApi";
 import { transformDummyProductToProduct, transformDummyProductsToProducts } from "@/utils/productTransformer";
 import { Metadata } from "next";
 import StructuredData from "@/components/seo/StructuredData";
+import { extractProductIdFromSlug, getCategoryFromSlug, generateBreadcrumbFromSlugs } from "@/utils/productSlugUtils";
 
 async function getProductData(id: number): Promise<Product | null> {
   try {
@@ -32,11 +33,11 @@ async function getRelatedProducts(limit = 4): Promise<Product[]> {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string[] };
+  params: { category: string; product: string };
 }): Promise<Metadata> {
-  const productId = Number(params.slug[0]);
+  const productId = extractProductIdFromSlug(params.product);
   
-  if (isNaN(productId)) {
+  if (!productId) {
     return {
       title: "Sản phẩm không tìm thấy - TPHOME",
       description: "Sản phẩm bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.",
@@ -54,16 +55,18 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${product.title} - TPHOME`;
+  const categoryName = getCategoryFromSlug(params.category);
+  const title = `${product.title} - ${categoryName} - TPHOME`;
   const description = `${product.description} Mua ngay với giá ${product.price.toLocaleString('vi-VN')}₫. Miễn phí vận chuyển, bảo hành chính hãng tại TPHOME.`;
   
   // Generate keywords based on product data
   const productKeywords = [
     product.title.toLowerCase(),
-    product.category?.toLowerCase(),
+    categoryName.toLowerCase(),
+    params.category,
     product.brand?.toLowerCase(),
     "mua online",
-    "giá tốt",
+    "giá tốt", 
     "chất lượng cao",
     "TPHOME",
     "giao hàng nhanh",
@@ -88,7 +91,7 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       locale: "vi_VN",
-      url: `https://tphome.vn/shop/product/${params.slug.join('/')}`,
+      url: `https://tphome.vn/${params.category}/${params.product}`,
       siteName: "TPHOME",
       title,
       description,
@@ -114,13 +117,13 @@ export async function generateMetadata({
       images: [product.thumbnail || "/images/product-placeholder.jpg"],
     },
     alternates: {
-      canonical: `https://tphome.vn/shop/product/${params.slug.join('/')}`,
+      canonical: `https://tphome.vn/${params.category}/${params.product}`,
     },
     other: {
       "product:price:amount": product.price.toString(),
       "product:price:currency": "VND",
       "product:availability": product.stock > 0 ? "in stock" : "out of stock",
-      "product:category": product.category || "",
+      "product:category": categoryName,
       "product:brand": product.brand || "TPHOME",
     },
     category: "Product",
@@ -130,11 +133,11 @@ export async function generateMetadata({
 export default async function ProductPage({
   params,
 }: {
-  params: { slug: string[] };
+  params: { category: string; product: string };
 }) {
-  const productId = Number(params.slug[0]);
+  const productId = extractProductIdFromSlug(params.product);
   
-  if (isNaN(productId)) {
+  if (!productId) {
     notFound();
   }
 
@@ -146,6 +149,8 @@ export default async function ProductPage({
   if (!productData?.title) {
     notFound();
   }
+
+  const breadcrumbData = generateBreadcrumbFromSlugs(params.category, params.product);
 
   // Generate product structured data
   const productSchema = {
@@ -163,7 +168,7 @@ export default async function ProductPage({
     },
     offers: {
       "@type": "Offer",
-      url: `https://tphome.vn/shop/product/${params.slug.join('/')}`,
+      url: `https://tphome.vn/${params.category}/${params.product}`,
       priceCurrency: "VND",
       price: productData.price.toString(),
       availability: productData.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
@@ -184,7 +189,7 @@ export default async function ProductPage({
       <StructuredData type="product" data={productSchema} />
       <div className="max-w-frame mx-auto px-4 xl:px-0">
         <hr className="h-[1px] border-t-black/10 mb-5 sm:mb-6" />
-        <BreadcrumbProduct title={productData?.title ?? "product"} />
+        <BreadcrumbProduct title={productData?.title ?? "product"} category={breadcrumbData.category} />
         <section className="mb-11">
           <Header data={productData} />
         </section>

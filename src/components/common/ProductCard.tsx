@@ -3,16 +3,19 @@ import Rating from "../ui/Rating";
 import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@/types/product.types";
+import { generateProductUrl } from "@/utils/productSlugUtils";
 
 type ProductCardProps = {
   data: Product;
 };
 
 const ProductCard = ({ data }: ProductCardProps) => {
+  const productUrl = generateProductUrl(data.category || 'san-pham-khac', data.title, data.id);
+  
   return (
     <Link
       title={data.title}
-      href={`/shop/product/${data.id}/${data.title.split(" ").join("-")}`}
+      href={productUrl}
       className="flex flex-col items-start aspect-auto"
     >
       <div className="bg-[#F0EEED] rounded-[13px] lg:rounded-[20px] w-full lg:max-w-[295px] aspect-square mb-2.5 xl:mb-4 overflow-hidden">

@@ -2,6 +2,8 @@ import { MetadataRoute } from 'next';
 import { DummyJsonApi } from '@/services/dummyJsonApi';
 import { ReviewServices } from '@/services/reviewServices';
 import { generateBlogSlug } from '@/utils/slugUtils';
+import { generateProductUrl } from '@/utils/productSlugUtils';
+import { transformDummyProductsToProducts } from '@/utils/productTransformer';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://tphome.vn';
@@ -32,12 +34,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let productPages: MetadataRoute.Sitemap = [];
   try {
     const productsResponse = await DummyJsonApi.getAllProducts(100); // Get up to 100 products for sitemap
-    productPages = productsResponse.products.map(product => ({
-      url: `${baseUrl}/shop/product/${product.id}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    }));
+    const products = transformDummyProductsToProducts(productsResponse.products);
+    productPages = products.map(product => {
+      const productUrl = generateProductUrl(product.category || 'san-pham-khac', product.title, product.id);
+      return {
+        url: `${baseUrl}${productUrl}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+      };
+    });
   } catch (error) {
     console.error('Error generating product sitemap:', error);
   }

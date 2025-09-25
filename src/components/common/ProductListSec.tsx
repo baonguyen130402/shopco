@@ -27,8 +27,7 @@ const ProductListSec = ({ title, data, viewAllLink }: ProductListSecProps) => {
     <section className="max-w-frame mx-auto text-center">
       <motion.h2
         initial={{ y: "100px", opacity: 0 }}
-        whileInView={{ y: "0", opacity: 1 }}
-        viewport={{ once: true }}
+        animate={{ y: "0", opacity: 1 }}
         transition={{ duration: 0.6 }}
         className={cn([
           integralCF.className,
@@ -39,9 +38,8 @@ const ProductListSec = ({ title, data, viewAllLink }: ProductListSecProps) => {
       </motion.h2>
       <motion.div
         initial={{ y: "100px", opacity: 0 }}
-        whileInView={{ y: "0", opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.6, duration: 0.6 }}
+        animate={{ y: "0", opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.6 }}
         className="space-y-8 md:space-y-12"
       >
         {/* First Carousel - Items 1-4 */}

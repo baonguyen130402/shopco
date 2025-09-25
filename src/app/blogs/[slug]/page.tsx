@@ -8,10 +8,80 @@ import { ArrowLeft, Share2, Heart, MessageCircle } from "lucide-react";
 import { Review } from "@/types/review.types";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import { extractUserIdFromSlug, generateBlogSlug } from "@/utils/slugUtils";
+import { Metadata } from "next";
 
 interface BlogPageProps {
   params: {
     slug: string;
+  };
+}
+
+export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
+  const blog = await getBlogBySlug(params.slug);
+  
+  if (!blog) {
+    return {
+      title: "Blog không tìm thấy - TPHOME",
+      description: "Trang blog bạn đang tìm kiếm không tồn tại.",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const title = `${blog.content.slice(1, 50)}... - Blog TPHOME`;
+  const description = `${blog.content.slice(1, 150)}... Đọc thêm các bài viết về gạch ốp lát, trang trí nội thất tại TPHOME.`;
+  
+  return {
+    title,
+    description,
+    keywords: [
+      "blog gạch ốp lát",
+      "kinh nghiệm trang trí",
+      "nội thất",
+      "thiết bị vệ sinh",
+      "tư vấn xây dựng",
+      "TPHOME blog",
+      "gạch trang trí",
+      "chia sẻ kinh nghiệm",
+    ],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    openGraph: {
+      type: "article",
+      locale: "vi_VN",
+      url: `https://tphome.vn/blogs/${params.slug}`,
+      siteName: "TPHOME",
+      title,
+      description,
+      images: [
+        {
+          url: "/images/blog-og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: `Blog TPHOME - ${blog.user}`,
+        },
+      ],
+      publishedTime: blog.date,
+      authors: [blog.user],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/images/blog-og-image.jpg"],
+    },
+    alternates: {
+      canonical: `https://tphome.vn/blogs/${params.slug}`,
+    },
+    category: "Blog",
   };
 }
 

@@ -1,4 +1,5 @@
 import BreadcrumbShop from "@/components/shop-page/BreadcrumbShop";
+import { Metadata } from "next";
 
 import {
   Select,
@@ -14,6 +15,60 @@ import ProductCard from "@/components/common/ProductCard";
 import { DummyJsonApi } from "@/services/dummyJsonApi";
 import { transformDummyProductsToProducts } from "@/utils/productTransformer";
 import ShopPagination from "@/components/shop-page/ShopPagination";
+
+export const metadata: Metadata = {
+  title: "Cửa Hàng Gạch Ốp Lát & Nội Thất - TPHOME",
+  description: "Khám phá bộ sưu tập gạch ốp lát, gạch trang trí, thiết bị vệ sinh và đồ nội thất cao cấp tại TPHOME. Hàng nghìn sản phẩm chất lượng với giá tốt nhất.",
+  keywords: [
+    "cửa hàng gạch ốp lát",
+    "mua gạch online",
+    "gạch trang trí giá rẻ",
+    "thiết bị vệ sinh online",
+    "shop nội thất",
+    "gạch ceramic chất lượng",
+    "lavabo cao cấp",
+    "bồn cầu giá tốt",
+    "trang trí nội thất",
+    "TPHOME shop"
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "vi_VN",
+    url: "https://tphome.vn/shop",
+    siteName: "TPHOME",
+    title: "Cửa Hàng Gạch Ốp Lát & Nội Thất - TPHOME",
+    description: "Khám phá bộ sưu tập gạch ốp lát, gạch trang trí, thiết bị vệ sinh và đồ nội thất cao cấp tại TPHOME.",
+    images: [
+      {
+        url: "/images/shop-og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "TPHOME Shop - Gạch Ốp Lát & Nội Thất",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cửa Hàng Gạch Ốp Lát & Nội Thất - TPHOME",
+    description: "Khám phá bộ sưu tập gạch ốp lát, gạch trang trí, thiết bị vệ sinh và đồ nội thất cao cấp.",
+    images: ["/images/shop-og-image.jpg"],
+  },
+  alternates: {
+    canonical: "https://tphome.vn/shop",
+  },
+  category: "E-commerce",
+};
 
 const PRODUCTS_PER_PAGE = 9;
 

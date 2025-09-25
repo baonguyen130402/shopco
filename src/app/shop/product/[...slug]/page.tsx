@@ -6,6 +6,7 @@ import { Product } from "@/types/product.types";
 import { notFound } from "next/navigation";
 import { DummyJsonApi } from "@/services/dummyJsonApi";
 import { transformDummyProductToProduct, transformDummyProductsToProducts } from "@/utils/productTransformer";
+import { Metadata } from "next";
 
 async function getProductData(id: number): Promise<Product | null> {
   try {
@@ -25,6 +26,104 @@ async function getRelatedProducts(limit = 4): Promise<Product[]> {
     console.error('Error fetching related products:', error);
     return [];
   }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string[] };
+}): Promise<Metadata> {
+  const productId = Number(params.slug[0]);
+  
+  if (isNaN(productId)) {
+    return {
+      title: "Sản phẩm không tìm thấy - TPHOME",
+      description: "Sản phẩm bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const product = await getProductData(productId);
+  
+  if (!product) {
+    return {
+      title: "Sản phẩm không tìm thấy - TPHOME",
+      description: "Sản phẩm bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const title = `${product.title} - TPHOME`;
+  const description = `${product.description} Mua ngay với giá ${product.price.toLocaleString('vi-VN')}₫. Miễn phí vận chuyển, bảo hành chính hãng tại TPHOME.`;
+  
+  // Generate keywords based on product data
+  const productKeywords = [
+    product.title.toLowerCase(),
+    product.category?.toLowerCase(),
+    product.brand?.toLowerCase(),
+    "mua online",
+    "giá tốt",
+    "chất lượng cao",
+    "TPHOME",
+    "giao hàng nhanh",
+    "bảo hành"
+  ].filter(Boolean);
+
+  return {
+    title,
+    description,
+    keywords: productKeywords,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    openGraph: {
+      type: "product",
+      locale: "vi_VN",
+      url: `https://tphome.vn/shop/product/${params.slug.join('/')}`,
+      siteName: "TPHOME",
+      title,
+      description,
+      images: [
+        {
+          url: product.thumbnail || "/images/product-placeholder.jpg",
+          width: 800,
+          height: 600,
+          alt: product.title,
+        },
+        ...(product.images?.slice(0, 3).map(img => ({
+          url: img,
+          width: 800,
+          height: 600,
+          alt: product.title,
+        })) || [])
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [product.thumbnail || "/images/product-placeholder.jpg"],
+    },
+    alternates: {
+      canonical: `https://tphome.vn/shop/product/${params.slug.join('/')}`,
+    },
+    other: {
+      "product:price:amount": product.price.toString(),
+      "product:price:currency": "VND",
+      "product:availability": product.stock > 0 ? "in stock" : "out of stock",
+      "product:category": product.category || "",
+      "product:brand": product.brand || "TPHOME",
+    },
+    category: "Product",
+  };
 }
 
 export default async function ProductPage({

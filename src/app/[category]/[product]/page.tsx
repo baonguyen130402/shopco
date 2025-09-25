@@ -20,7 +20,7 @@ async function getProductData(id: number): Promise<Product | null> {
   }
 }
 
-async function getRelatedProducts(limit = 4): Promise<Product[]> {
+async function getRelatedProducts(limit = 8): Promise<Product[]> {
   try {
     const response = await DummyJsonApi.getAllProducts(limit);
     return transformDummyProductsToProducts(response.products);

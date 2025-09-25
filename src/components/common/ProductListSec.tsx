@@ -19,6 +19,10 @@ type ProductListSecProps = {
 };
 
 const ProductListSec = ({ title, data, viewAllLink }: ProductListSecProps) => {
+  // Split data into two groups of 4 items each
+  const firstGroup = data.slice(0, 4);
+  const secondGroup = data.slice(4, 8);
+
   return (
     <section className="max-w-frame mx-auto text-center">
       <motion.h2
@@ -38,15 +42,17 @@ const ProductListSec = ({ title, data, viewAllLink }: ProductListSecProps) => {
         whileInView={{ y: "0", opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 0.6, duration: 0.6 }}
+        className="space-y-8 md:space-y-12"
       >
+        {/* First Carousel - Items 1-4 */}
         <Carousel
           opts={{
             align: "start",
           }}
-          className="w-full mb-6 md:mb-9"
+          className="w-full"
         >
           <CarouselContent className="mx-4 xl:mx-0 space-x-4 sm:space-x-5">
-            {data.map((product) => (
+            {firstGroup.map((product) => (
               <CarouselItem
                 key={product.id}
                 className="w-full max-w-[198px] sm:max-w-[295px] pl-0"
@@ -56,6 +62,28 @@ const ProductListSec = ({ title, data, viewAllLink }: ProductListSecProps) => {
             ))}
           </CarouselContent>
         </Carousel>
+
+        {/* Second Carousel - Items 5-8 */}
+        {secondGroup.length > 0 && (
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            className="w-full mb-6 md:mb-9"
+          >
+            <CarouselContent className="mx-4 xl:mx-0 space-x-4 sm:space-x-5">
+              {secondGroup.map((product) => (
+                <CarouselItem
+                  key={product.id}
+                  className="w-full max-w-[198px] sm:max-w-[295px] pl-0"
+                >
+                  <ProductCard data={product} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        )}
+
         {viewAllLink && (
           <div className="w-full px-4 sm:px-0 text-center">
             <Link

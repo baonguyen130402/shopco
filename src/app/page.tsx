@@ -32,10 +32,10 @@ async function getReviewsData() {
 export default async function Home() {
   // Fetch different sets of products for different sections and reviews
   const [flashSaleProducts, decorativeTileProducts, floorTileProducts, sanitaryProducts, reviewsData] = await Promise.all([
-    getProductsByRange(0, 4),   // First 4 products for flash sale
-    getProductsByRange(4, 4),   // Next 4 products for decorative tiles
-    getProductsByRange(8, 4),   // Next 4 products for floor tiles  
-    getProductsByRange(12, 4),  // Next 4 products for sanitary equipment
+    getProductsByRange(0, 8),   // First 8 products for flash sale
+    getProductsByRange(8, 8),   // Next 8 products for decorative tiles
+    getProductsByRange(16, 8),  // Next 8 products for floor tiles  
+    getProductsByRange(24, 8),  // Next 8 products for sanitary equipment
     getReviewsData(),           // Dynamic reviews from DummyJSON posts
   ]);
 

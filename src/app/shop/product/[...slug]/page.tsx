@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { DummyJsonApi } from "@/services/dummyJsonApi";
 import { transformDummyProductToProduct, transformDummyProductsToProducts } from "@/utils/productTransformer";
 import { Metadata } from "next";
+import StructuredData from "@/components/seo/StructuredData";
 
 async function getProductData(id: number): Promise<Product | null> {
   try {
@@ -85,7 +86,7 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      type: "product",
+      type: "website",
       locale: "vi_VN",
       url: `https://tphome.vn/shop/product/${params.slug.join('/')}`,
       siteName: "TPHOME",
@@ -146,8 +147,41 @@ export default async function ProductPage({
     notFound();
   }
 
+  // Generate product structured data
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: productData.title,
+    description: productData.description,
+    image: [
+      productData.thumbnail || "/images/product-placeholder.jpg",
+      ...(productData.images || [])
+    ],
+    brand: {
+      "@type": "Brand",
+      name: productData.brand || "TPHOME"
+    },
+    offers: {
+      "@type": "Offer",
+      url: `https://tphome.vn/shop/product/${params.slug.join('/')}`,
+      priceCurrency: "VND",
+      price: productData.price.toString(),
+      availability: productData.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      seller: {
+        "@type": "Organization",
+        name: "TPHOME"
+      }
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: productData.rating?.toString() || "5",
+      reviewCount: "1"
+    }
+  };
+
   return (
     <main>
+      <StructuredData type="product" data={productSchema} />
       <div className="max-w-frame mx-auto px-4 xl:px-0">
         <hr className="h-[1px] border-t-black/10 mb-5 sm:mb-6" />
         <BreadcrumbProduct title={productData?.title ?? "product"} />

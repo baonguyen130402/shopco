@@ -9,6 +9,7 @@ import { Review } from "@/types/review.types";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import { extractUserIdFromSlug, generateBlogSlug } from "@/utils/slugUtils";
 import { Metadata } from "next";
+import StructuredData from "@/components/seo/StructuredData";
 
 interface BlogPageProps {
   params: {
@@ -124,8 +125,35 @@ export default async function BlogPage({ params }: BlogPageProps) {
 
   const relatedBlogs = await getRelatedBlogs(blog.id);
 
+  // Generate blog structured data
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: blog.content.slice(1, 100).replace(/"/g, '') + "...",
+    description: blog.content.slice(1, 150).replace(/"/g, '') + "...",
+    author: {
+      "@type": "Person",
+      name: blog.user
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "TPHOME",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://tphome.vn/images/logo.png"
+      }
+    },
+    datePublished: blog.date,
+    dateModified: blog.date,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://tphome.vn/blogs/${params.slug}`
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
+      <StructuredData type="blog" data={blogSchema} />
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-frame mx-auto px-4 xl:px-0 py-4">

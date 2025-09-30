@@ -127,26 +127,26 @@ export default async function BlogPage({ params }: BlogPageProps) {
 
   // Generate blog structured data
   const blogSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    "@context": "https://schema.org" as const,
+    "@type": "BlogPosting" as const,
     headline: blog.content.slice(1, 100).replace(/"/g, '') + "...",
     description: blog.content.slice(1, 150).replace(/"/g, '') + "...",
     author: {
-      "@type": "Person",
+      "@type": "Person" as const,
       name: blog.user
     },
     publisher: {
-      "@type": "Organization",
+      "@type": "Organization" as const,
       name: "TPHOME",
       logo: {
-        "@type": "ImageObject",
+        "@type": "ImageObject" as const,
         url: "https://tphome.vn/images/logo.png"
       }
     },
     datePublished: blog.date,
     dateModified: blog.date,
     mainEntityOfPage: {
-      "@type": "WebPage",
+      "@type": "WebPage" as const,
       "@id": `https://tphome.vn/blogs/${params.slug}`
     }
   };

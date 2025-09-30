@@ -8,6 +8,7 @@ import LinksSection from "./LinksSection";
 import Image from "next/image";
 import NewsLetterSection from "./NewsLetterSection";
 import LayoutSpacing from "./LayoutSpacing";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 
 const socialsData: SocialNetworks[] = [
   {
@@ -62,23 +63,52 @@ const Footer = () => {
       <div className="pt-8 md:pt-[50px] bg-[#F0F0F0] px-4 pb-4">
         <div className="max-w-frame mx-auto">
           <nav className="lg:grid lg:grid-cols-12 mb-8">
-            <div className="flex flex-col lg:col-span-3 lg:max-w-[248px]">
+            <div className="flex flex-col lg:col-span-4 lg:max-w-[340px]">
               <h1
                 className={cn([
                   integralCF.className,
-                  "text-[28px] lg:text-[32px] mb-6",
+                  "text-[28px] lg:text-[32px] mb-4",
                 ])}
               >
                 TPHOME
               </h1>
-              <p className="text-black/80 text-sm font-medium mb-9 whitespace-pre-line">
-                SHOWROOM NỘI THẤT TP HOME<br/>
-                Địa chỉ: 42 QL1A, Xã Trung Hoà, Huyện Trảng Bom, Tỉnh Đồng Nai<br/>
-                Hoạt động: 7:30 - 21:00<br/>
-                Email: phatnguyen.tphome@gmail.com<br/>
-                Tel : 093 39 39 309 <br/>
-                Hotline : 0779 89 07 89
-              </p>
+              <div className="space-y-2 mb-4">
+                <div className="flex items-start space-x-3">
+                  <MapPin className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                  <div className="text-sm">
+                    <span className="font-medium text-black">Địa chỉ: </span>
+                    <span className=" text-black/60">42 QL1A, Xã Trung Hoà, Huyện Trảng Bom, Tỉnh Đồng Nai</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-3">
+                  <Phone className="w-4 h-4 text-red-500 flex-shrink-0" />
+                  <div className="text-sm">
+                    <span className="font-medium text-black">Hotline: </span>
+                    <a href="tel:0779890789" className="text-black/60 hover:text-red-500 transition-colors">
+                      0779 89 0789
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-3">
+                  <Clock className="w-4 h-4 text-red-500 flex-shrink-0" />
+                  <div className="text-sm">
+                    <span className="font-medium text-black">Giờ mở cửa: </span>
+                    <span className="text-black/60">7:30 - 21:00 (Thứ 2 - Chủ nhật)</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-3">
+                  <Mail className="w-4 h-4 text-red-500 flex-shrink-0" />
+                  <div className="text-sm">
+                    <span className="font-medium text-black">Email: </span>
+                    <a href="mailto:phatnguyen.tphome@gmail.com" className="text-black/60 hover:text-red-500 transition-colors">
+                      phatnguyen.tphome@gmail.com
+                    </a>
+                  </div>
+                </div>
+              </div>
               <div className="flex items-center">
                 {socialsData.map((social) => (
                   <Link
@@ -92,7 +122,7 @@ const Footer = () => {
                 ))}
               </div>
             </div>
-            <div className="hidden lg:grid col-span-9 lg:grid-cols-4 lg:pl-10">
+            <div className="hidden lg:grid col-span-8 lg:grid-cols-4 lg:pl-10">
               <LinksSection />
             </div>
             <div className="grid lg:hidden grid-cols-2 sm:grid-cols-4">

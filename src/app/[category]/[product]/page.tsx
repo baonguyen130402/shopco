@@ -57,7 +57,7 @@ export async function generateMetadata({
 
   const categoryName = getCategoryFromSlug(params.category);
   const title = `${product.title} - ${categoryName} - TPHOME`;
-  const description = `${product.description} Mua ngay với giá ${product.price.toLocaleString('vi-VN')}₫. Miễn phí vận chuyển, bảo hành chính hãng tại TPHOME.`;
+  const description = `${product.description || product.title} Mua ngay với giá ${product.price.toLocaleString('vi-VN')}₫. Miễn phí vận chuyển, bảo hành chính hãng tại TPHOME.`;
   
   // Generate keywords based on product data
   const productKeywords = [
@@ -71,7 +71,7 @@ export async function generateMetadata({
     "TPHOME",
     "giao hàng nhanh",
     "bảo hành"
-  ].filter(Boolean);
+  ].filter((keyword): keyword is string => Boolean(keyword));
 
   return {
     title,
@@ -122,7 +122,7 @@ export async function generateMetadata({
     other: {
       "product:price:amount": product.price.toString(),
       "product:price:currency": "VND",
-      "product:availability": product.stock > 0 ? "in stock" : "out of stock",
+      "product:availability": (product.stock ?? 0) > 0 ? "in stock" : "out of stock",
       "product:category": categoryName,
       "product:brand": product.brand || "TPHOME",
     },
@@ -154,31 +154,31 @@ export default async function ProductPage({
 
   // Generate product structured data
   const productSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
+    "@context": "https://schema.org" as const,
+    "@type": "Product" as const,
     name: productData.title,
-    description: productData.description,
+    description: productData.description || productData.title,
     image: [
       productData.thumbnail || "/images/product-placeholder.jpg",
       ...(productData.images || [])
     ],
     brand: {
-      "@type": "Brand",
+      "@type": "Brand" as const,
       name: productData.brand || "TPHOME"
     },
     offers: {
-      "@type": "Offer",
+      "@type": "Offer" as const,
       url: `https://tphome.vn/${params.category}/${params.product}`,
       priceCurrency: "VND",
       price: productData.price.toString(),
-      availability: productData.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      availability: (productData.stock ?? 0) > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       seller: {
-        "@type": "Organization",
+        "@type": "Organization" as const,
         name: "TPHOME"
       }
     },
     aggregateRating: {
-      "@type": "AggregateRating",
+      "@type": "AggregateRating" as const,
       ratingValue: productData.rating?.toString() || "5",
       reviewCount: "1"
     }

@@ -18,7 +18,7 @@ const ProductCard = ({ data }: ProductCardProps) => {
       href={productUrl}
       className="flex flex-col items-start aspect-auto"
     >
-      <div className="bg-[#F0EEED] rounded-[13px] lg:rounded-[20px] w-full lg:max-w-[295px] aspect-square mb-2.5 xl:mb-4 overflow-hidden">
+      <div className="bg-[#F0EEED] rounded-[13px] lg:rounded-[20px] w-full lg:max-w-[295px] aspect-square mb-2.5 xl:mb-4 overflow-hidden relative">
         <Image
           title={data.title}
           src={data.srcUrl}
@@ -28,6 +28,24 @@ const ProductCard = ({ data }: ProductCardProps) => {
           alt={data.title}
           priority
         />
+        {/* Sale Badge */}
+        {(data.discount.percentage > 0 || data.discount.amount > 0) && (
+          <div className="absolute top-3 left-3 z-10">
+            <div className="bg-red-500 text-white px-2 py-1 rounded-lg text-xs font-bold shadow-lg">
+              {data.discount.percentage > 0 ? (
+                <>
+                  <span className="text-[10px] uppercase tracking-wide">SALE UP TO</span>
+                  <div className="text-sm font-black">{data.discount.percentage}%</div>
+                </>
+              ) : (
+                <>
+                  <span className="text-[10px] uppercase tracking-wide">GIẢM GIÁ</span>
+                  <div className="text-sm font-black">{data.discount.amount.toLocaleString('vi-VN')}đ</div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </div>
       <strong className="text-black xl:text-xl font-lato font-semibold">{data.title}</strong>
       <div className="flex items-end mb-1 xl:mb-2">

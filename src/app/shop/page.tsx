@@ -72,15 +72,52 @@ export const metadata: Metadata = {
 
 const PRODUCTS_PER_PAGE = 9;
 
-async function getShopProducts(page: number = 1) {
+async function getShopProducts(page: number = 1, searchQuery: string = '') {
   try {
     const skip = (page - 1) * PRODUCTS_PER_PAGE;
-    const response = await DummyJsonApi.getAllProducts(PRODUCTS_PER_PAGE, skip);
+    const response = await DummyJsonApi.getAllProducts(100, 0); // Get more products for search
+    let allProducts = transformDummyProductsToProducts(response.products);
+    
+    // Filter products if search query exists
+    if (searchQuery.trim()) {
+      const lowercaseQuery = searchQuery.toLowerCase().trim();
+      
+      allProducts = allProducts.filter(product => {
+        // Search in product title
+        const titleMatch = product.title.toLowerCase().includes(lowercaseQuery);
+        
+        // Search in product description
+        const descriptionMatch = product.description?.toLowerCase().includes(lowercaseQuery);
+        
+        // Search in product category
+        const categoryMatch = product.category?.toLowerCase().includes(lowercaseQuery);
+        
+        // Search in Vietnamese keywords
+        const vietnameseKeywords = [
+          'gạch ốp lát', 'gạch trang trí', 'thiết bị vệ sinh', 'lavabo', 'bồn cầu',
+          'vòi sen', 'đèn trang trí', 'phụ kiện', 'gương', 'tủ lavabo',
+          'gạch ceramic', 'gạch granite', 'nội thất', 'phòng tắm', 'phòng khách'
+        ];
+        
+        const keywordMatch = vietnameseKeywords.some(keyword => 
+          keyword.includes(lowercaseQuery) || lowercaseQuery.includes(keyword)
+        );
+
+        return titleMatch || descriptionMatch || categoryMatch || keywordMatch;
+      });
+    }
+    
+    // Paginate the filtered results
+    const total = allProducts.length;
+    const totalPages = Math.ceil(total / PRODUCTS_PER_PAGE);
+    const paginatedProducts = allProducts.slice(skip, skip + PRODUCTS_PER_PAGE);
+    
     return {
-      products: transformDummyProductsToProducts(response.products),
-      total: response.total,
+      products: paginatedProducts,
+      total,
       currentPage: page,
-      totalPages: Math.ceil(response.total / PRODUCTS_PER_PAGE)
+      totalPages,
+      searchQuery
     };
   } catch (error) {
     console.error('Error fetching shop products:', error);
@@ -88,18 +125,23 @@ async function getShopProducts(page: number = 1) {
       products: [],
       total: 0,
       currentPage: 1,
-      totalPages: 0
+      totalPages: 0,
+      searchQuery
     };
   }
 }
 
 interface ShopPageProps {
-  searchParams: { page?: string };
+  searchParams: { page?: string; search?: string };
 }
 
 export default async function ShopPage({ searchParams }: ShopPageProps) {
   const currentPage = Number(searchParams.page) || 1;
-  const { products, total, totalPages } = await getShopProducts(currentPage);
+  const searchQuery = searchParams.search || '';
+  
+  const { products, total, totalPages } = await getShopProducts(currentPage, searchQuery);
+  
+  const isSearching = searchQuery.trim().length > 0;
   return (
     <main className="pb-20">
       <div className="max-w-frame mx-auto px-4 xl:px-0">
@@ -116,7 +158,16 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
           <div className="flex flex-col w-full space-y-5">
             <div className="flex flex-col lg:flex-row lg:justify-between">
               <div className="flex items-center justify-between">
-                <h1 className="font-bold text-2xl md:text-[32px]">Casual</h1>
+                <div>
+                  <h1 className="font-bold text-2xl md:text-[32px]">
+                    {isSearching ? `Kết quả tìm kiếm` : 'Sản phẩm'}
+                  </h1>
+                  {isSearching && (
+                    <p className="text-sm text-gray-600 mt-1">
+                      Tìm kiếm cho: "<span className="font-medium">{searchQuery}</span>"
+                    </p>
+                  )}
+                </div>
                 <MobileFilters />
               </div>
               <div className="flex flex-col sm:items-center sm:flex-row">

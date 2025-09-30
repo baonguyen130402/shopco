@@ -7,10 +7,16 @@ import Footer from "@/components/layout/Footer";
 import HolyLoader from "holy-loader";
 import Providers from "./providers";
 import StructuredData, { TPHOMEOrganizationSchema } from "@/components/seo/StructuredData";
+import PromoBanner from "@/components/layout/PromoBanner/PromoBanner";
 
 export const metadata: Metadata = {
   title: "TPHOME - Gạch Ốp Lát & Đồ Nội Thất Cao Cấp",
   description: "Chuyên cung cấp gạch ốp lát, gạch trang trí, thiết bị vệ sinh và đồ nội thất cao cấp. Uy tín - Chất lượng - Giá tốt nhất thị trường.",
+  icons: {
+    icon: '/icons/tphome.ico',
+    shortcut: '/icons/tphome.ico',
+    apple: '/icons/tphome.ico',
+  },
   keywords: [
     "gạch ốp lát",
     "gạch trang trí", 
@@ -89,6 +95,7 @@ export default function RootLayout({
       <body className={`${playfairDisplay.variable} ${lato.variable} ${lato.className} antialiased`}>
         <StructuredData type="organization" data={TPHOMEOrganizationSchema} />
         <HolyLoader color="#868686" />
+        <PromoBanner />
         <TopBanner />
         <Providers>
           <TopNavbar />

@@ -15,6 +15,7 @@ import InputGroup from "@/components/ui/input-group";
 import ResTopNavbar from "./ResTopNavbar";
 import CartBtn from "./CartBtn";
 import { Button } from "@/components/ui/button";
+import SearchInput from "./SearchInput";
 
 const data: NavMenu = [
   {
@@ -245,24 +246,9 @@ const TopNavbar = () => {
             ))}
           </NavigationMenuList>
         </NavigationMenu>
-        <InputGroup className="hidden lg:flex bg-[#F0F0F0] mr-3 lg:mr-10">
-          <InputGroup.Text>
-            <Image
-              priority
-              src="/icons/search.svg"
-              height={20}
-              width={20}
-              alt="search"
-              className="min-w-5 min-h-5"
-            />
-          </InputGroup.Text>
-          <InputGroup.Input
-            type="search"
-            name="search"
-            placeholder="Tìm kiếm sản phẩm..."
-            className="bg-transparent placeholder:text-black/40 font-lato"
-          />
-        </InputGroup>
+        <div className="hidden lg:flex mr-3 lg:mr-10">
+          <SearchInput />
+        </div>
         <div className="flex items-center">
           <Button className="hotline-animate font-lato font-medium">
             <a href="tel:0779890789">📞 0779 89 0789</a>

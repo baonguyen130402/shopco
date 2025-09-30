@@ -246,10 +246,10 @@ const MapSection = () => {
           <div style="text-align: center; min-width: 200px;">
             <h3 style="font-weight: bold; margin-bottom: 8px; color: #1f2937;">TPHOME</h3>
             <p style="margin-bottom: 4px; color: #6b7280;">Gạch Ốp Lát & Nội Thất Cao Cấp</p>
-            <p style="margin-bottom: 8px; color: #6b7280;">📍 TP. Hồ Chí Minh</p>
+            <p style="margin-bottom: 8px; color: #6b7280;">📍 Trảng Bom, Đồng Nai</p>
             <div style="font-size: 12px; color: #9ca3af;">
               <p>📞 0779 89 0789</p>
-              <p>🕒 8:00 - 18:00 (T2-CN)</p>
+              <p>🕒 7:30 - 21:00 (T2-CN)</p>
             </div>
           </div>
         `);
@@ -286,7 +286,7 @@ const MapSection = () => {
         <div
           ref={mapRef}
           className="w-full h-48 md:h-56 rounded-lg overflow-hidden border border-gray-200 shadow-sm"
-          style={{ minHeight: '200px' }}
+          style={{ minHeight: '264px' }}
         />
       </div>
 

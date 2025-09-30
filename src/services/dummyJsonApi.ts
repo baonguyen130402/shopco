@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { DummyPost, DummyPostsResponse, DummyUser } from '@/types/post.types';
 
-const BASE_URL = process.env.API_URL;
+const BASE_URL = process.env.NEXT_API_URL;
 
 export interface DummyProduct {
   id: number;

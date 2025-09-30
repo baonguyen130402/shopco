@@ -64,14 +64,16 @@ const Footer = () => {
         <div className="max-w-frame mx-auto">
           <nav className="lg:grid lg:grid-cols-12 mb-8">
             <div className="flex flex-col lg:col-span-4 lg:max-w-[340px]">
-              <h1
-                className={cn([
-                  integralCF.className,
-                  "text-[28px] lg:text-[32px] mb-4",
-                ])}
-              >
-                TPHOME
-              </h1>
+              <Link href="/" className="mr-3 lg:mr-10 mb-8">
+                <Image
+                  src="/images/logo.png"
+                  alt="TPHOME Logo"
+                  width={120}
+                  height={40}
+                  className="h-8 lg:h-[5.5rem] w-auto"
+                  priority
+                />
+              </Link>
               <div className="space-y-2 mb-4">
                 <div className="flex items-start space-x-3">
                   <MapPin className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />

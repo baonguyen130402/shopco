@@ -208,7 +208,7 @@ const data: NavMenu = [
   {
     id: 5,
     type: "MenuItem",
-  label: "🔥 Flash sale",
+    label: "🔥 Flash sale",
     url: "/shop#on-sale",
     children: [],
   },
@@ -222,14 +222,15 @@ const TopNavbar = () => {
           <div className="block md:hidden mr-4">
             <ResTopNavbar data={data} />
           </div>
-          <Link
-            href="/"
-            className={cn([
-              playfairDisplay.className,
-              "text-2xl lg:text-[32px] mb-2 mr-3 lg:mr-10 font-bold",
-            ])}
-          >
-            TPHOME
+          <Link href="/" className="mr-3 lg:mr-10">
+            <Image
+              src="/images/logo.png"
+              alt="TPHOME Logo"
+              width={120}
+              height={40}
+              className="h-8 lg:h-[2.8rem] w-auto"
+              priority
+            />
           </Link>
         </div>
         <NavigationMenu className="hidden md:flex mr-2 lg:mr-7">

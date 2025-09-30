@@ -17,15 +17,59 @@ const SearchInput = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [placeholder, setPlaceholder] = useState('');
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
   
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  // Placeholder texts to rotate through
+  const placeholderTexts = [
+    'Bạn cần tìm gì...',
+    'Gạch ốp lát',
+    'Bồn cầu',
+    'Lavabo',
+    'Tranh phong thuỷ',
+    'Đèn trang trí',
+  ];
+
+  // AutoType animation effect
+  useEffect(() => {
+    let currentText = placeholderTexts[placeholderIndex];
+    let currentIndex = 0;
+    let isDeleting = false;
+    let timeoutId: NodeJS.Timeout;
+
+    const type = () => {
+      if (!isDeleting && currentIndex <= currentText.length) {
+        setPlaceholder(currentText.substring(0, currentIndex));
+        currentIndex++;
+        timeoutId = setTimeout(type, 100);
+      } else if (!isDeleting && currentIndex > currentText.length) {
+        timeoutId = setTimeout(() => {
+          isDeleting = true;
+          type();
+        }, 2000);
+      } else if (isDeleting && currentIndex > 0) {
+        currentIndex--;
+        setPlaceholder(currentText.substring(0, currentIndex));
+        timeoutId = setTimeout(type, 50);
+      } else if (isDeleting && currentIndex === 0) {
+        isDeleting = false;
+        setPlaceholderIndex((prev) => (prev + 1) % placeholderTexts.length);
+      }
+    };
+
+    type();
+
+    return () => clearTimeout(timeoutId);
+  }, [placeholderIndex]);
 
   // Load all products and sync with URL params on component mount
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const response = await DummyJsonApi.getAllProducts(100); // Load more products for search
+        const response = await DummyJsonApi.getAllProducts(100);
         const products = transformDummyProductsToProducts(response.products);
         setAllProducts(products);
       } catch (error) {
@@ -34,7 +78,6 @@ const SearchInput = () => {
     };
     loadProducts();
 
-    // Sync search query with URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const urlSearchQuery = urlParams.get('search');
     if (urlSearchQuery) {
@@ -52,7 +95,6 @@ const SearchInput = () => {
 
     setIsLoading(true);
     
-    // Debounce search
     const timeoutId = setTimeout(() => {
       searchProducts(searchQuery);
     }, 300);
@@ -64,16 +106,10 @@ const SearchInput = () => {
     const lowercaseQuery = query.toLowerCase();
     
     const filtered = allProducts.filter(product => {
-      // Search in product title
       const titleMatch = product.title.toLowerCase().includes(lowercaseQuery);
-      
-      // Search in product description
       const descriptionMatch = product.description?.toLowerCase().includes(lowercaseQuery);
-      
-      // Search in product category
       const categoryMatch = product.category?.toLowerCase().includes(lowercaseQuery);
       
-      // Search in Vietnamese keywords
       const vietnameseKeywords = [
         'gạch ốp lát', 'gạch trang trí', 'thiết bị vệ sinh', 'lavabo', 'bồn cầu',
         'vòi sen', 'đèn trang trí', 'phụ kiện', 'gương', 'tủ lavabo',
@@ -87,7 +123,7 @@ const SearchInput = () => {
       return titleMatch || descriptionMatch || categoryMatch || keywordMatch;
     });
 
-    setSearchResults(filtered.slice(0, 8)); // Limit to 8 results
+    setSearchResults(filtered.slice(0, 8));
     setShowResults(filtered.length > 0);
     setIsLoading(false);
   };
@@ -96,7 +132,6 @@ const SearchInput = () => {
     const value = e.target.value;
     setSearchQuery(value);
     
-    // If user clears the search input, handle the clear action
     if (value === '') {
       handleClearSearch();
     }
@@ -111,7 +146,6 @@ const SearchInput = () => {
     setSearchQuery('');
     setShowResults(false);
     
-    // If we're on the shop page with search params, go back to shop without search
     if (window.location.pathname === '/shop' && window.location.search.includes('search=')) {
       router.push('/shop');
     }
@@ -120,13 +154,11 @@ const SearchInput = () => {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // Navigate to shop page with search query
       router.push(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
       setShowResults(false);
     }
   };
 
-  // Close search results when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
@@ -157,7 +189,7 @@ const SearchInput = () => {
             name="search"
             value={searchQuery}
             onChange={handleInputChange}
-            placeholder="Tìm kiếm sản phẩm..."
+            placeholder={placeholder}
             className="bg-transparent placeholder:text-black/40 font-lato pr-8"
             autoComplete="off"
           />
@@ -173,7 +205,6 @@ const SearchInput = () => {
         </InputGroup>
       </form>
 
-      {/* Search Results Dropdown */}
       {showResults && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-xl z-50 max-h-96 overflow-y-auto">
           {isLoading ? (
